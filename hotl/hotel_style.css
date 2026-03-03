@@ -1,0 +1,266 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Poppins:wght@300;400;500&display=swap');
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: 'Poppins', sans-serif;
+    color: #fff;
+
+    /* HERO BACKGROUND */
+    background: 
+        linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.55)),
+        url("turtlebay.jpg");
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+    background-blend-mode: overlay;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* ---------- MAIN LUXURY GLASS PANEL ---------- */
+.container {
+    width: 90%;
+    max-width: 1500px;
+    padding: 50px;
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(18px);
+    border-radius: 30px;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.6);
+    border: 1px solid rgba(255,255,255,0.15);
+}
+
+/* ---------- TITLE ---------- */
+h1 {
+    text-align: center;
+    font-family: 'Playfair Display', serif;
+    letter-spacing: 2px;
+    margin-bottom: 45px;
+    text-shadow: 0 5px 25px rgba(0,0,0,0.6);
+}
+
+/* Logo */
+.logo {
+    text-align: center;
+    /* Adjust these negative values until the grid looks right */
+    margin-top: -350px; 
+    margin-bottom: -350px; 
+    position: relative;
+    z-index: 1; /* Keeps the logo on top of other elements */
+}
+
+.logo img {
+    max-width: 800px; /* Make it as big as you want now */
+    width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+/* ---------- ROOMS GRID ---------- */
+.room-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 35px;
+}
+
+/* ---------- ROOM CARD ---------- */
+.room {
+    background: rgba(0,0,0,0.35);
+    border-radius: 24px;
+    padding: 28px;
+    box-shadow: 0 15px 45px rgba(0,0,0,0.55);
+    transition: all 0.35s ease;
+    border: 1px solid rgba(255,255,255,0.12);
+    z-index:10;
+}
+
+.room:hover {
+    transform: translateY(-8px) scale(1.01);
+    box-shadow: 0 25px 60px rgba(0,0,0,0.75);
+}
+
+/* ---------- ROOM TITLE ---------- */
+.room h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    letter-spacing: 1px;
+    margin-bottom: 15px;
+}
+
+/* ---------- INPUT ---------- */
+.room input {
+    width: 100%;
+    padding: 14px 16px;
+    border-radius: 12px;
+    border: none;
+    outline: none;
+    font-size: 1rem;
+    margin-bottom: 14px;
+    background: rgba(255,255,255,0.9);
+    color: #000;
+}
+
+/* ---------- BUTTONS ---------- */
+.room button {
+    padding: 10px 16px;
+    border-radius: 12px;
+    border: none;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.25s ease;
+    margin: 4px 6px 10px 0;
+}
+
+/* Add Guest */
+.room button[id^="add"] {
+    background: linear-gradient(135deg, #2af598, #009efd);
+    color: #000;
+}
+
+/* Lock Room */
+.room button[id^="lock"] {
+    background: linear-gradient(135deg, #f6d365, #fda085);
+    color: #000;
+}
+
+/* Remove All */
+.room button[id^="removeAll"] {
+    background: linear-gradient(135deg, #ff6a6a, #ff2e63);
+    color: #fff;
+}
+
+/* Hover */
+.room button:hover {
+    transform: scale(1.07);
+    filter: brightness(1.1);
+}
+
+/* Disabled */
+.room button:disabled,
+.room input:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+
+.button-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.button-row button {
+    flex: 1;
+    white-space: nowrap;
+    font-size: 0.85rem;
+}
+
+
+
+
+/* ---------- GUEST LIST ---------- */
+.room div[id^="list"] {
+    margin-top: 18px;
+}
+
+/* Guest item */
+.room div[id^="list"] > div {
+    background: rgba(255,255,255,0.12);
+    padding: 12px 14px;
+    border-radius: 14px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    backdrop-filter: blur(8px);
+    animation: fadeIn 0.35s ease;
+}
+
+/* Remove guest button */
+.room div[id^="list"] button {
+    background: #ff2e63;
+    color: white;
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    font-size: 0.8rem;
+}
+
+/* ---------- ANIMATION ---------- */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ---------- MOBILE ---------- */
+@media (max-width: 600px) {
+    h1 {
+        font-size: 2.2rem;
+    }
+
+    .container {
+        padding: 30px 20px;
+    }
+}
+
+/* Log container */
+#log {
+    margin-top: auto;
+    max-height: 180px;              /* visible log area */
+    overflow-y: auto;               /* scroll when full */
+    padding: 16px 18px;
+    background: rgba(0,0,0,0.55);
+    border-radius: 16px;
+    text-align: left;
+    font-size: 0.9rem;
+    letter-spacing: 0.4px;
+    color: #eaffff;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.45);
+    border: 1px solid rgba(255,255,255,0.12);
+}
+
+/* Individual log entries */
+.log-entry {
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    opacity: 0.9;
+}
+
+/* Time styling */
+.log-time {
+    font-size: 0.75rem;
+    opacity: 0.6;
+    margin-right: 6px;
+}
+
+/* Scrollbar styling */
+#log::-webkit-scrollbar {
+    width: 6px;
+}
+
+#log::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.25);
+    border-radius: 10px;
+}
+
+#log {
+    animation: pulse 0.6s ease;
+}
+
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 rgba(0,255,200,0.0); }
+    50% { box-shadow: 0 0 25px rgba(0,255,200,0.6); }
+    100% { box-shadow: 0 10px 25px rgba(0,0,0,0.4); }
+}

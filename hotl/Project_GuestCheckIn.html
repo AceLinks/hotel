@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Turtle Bay Resort Check-in</title>
+    <link rel="stylesheet" href="hotel_style.css">
+</head>
+
+<body>
+
+<div class="container">
+    <div class="logo">
+    <img src="TurtleBayLogo.png" alt="Turtle Bay Resort">
+    </div>
+
+    <div class="room-grid">
+
+        <!-- ROOM TEMPLATE A-F -->
+        <!-- Copy structure reused -->
+
+        <!-- ROOM A -->
+        <div class="room">
+            <h2>Room A</h2>
+            <input id="input-A" type="text" placeholder="Guest Name">
+            <div class="button-row">
+                <button onclick="addGuest('A')" id="addA">Add Guest</button>
+                <button onclick="lockRoom('A')" id="lockA">Lock Room</button>
+                <button onclick="removeAll('A')" id="removeAllA">Remove All</button>
+            </div>
+            <div id="list-A"></div>
+        </div>
+
+        <!-- ROOM B -->
+        <div class="room">
+            <h2>Room B</h2>
+            <input id="input-B" type="text" placeholder="Guest Name">
+            <div class="button-row">
+                <button onclick="addGuest('B')" id="addB">Add Guest</button>
+                <button onclick="lockRoom('B')" id="lockB">Lock Room</button>
+                <button onclick="removeAll('B')" id="removeAllB">Remove All</button>
+            </div>
+            <div id="list-B"></div>
+        </div>
+
+        <!-- ROOM C -->
+        <div class="room">
+            <h2>Room C</h2>
+            <input id="input-C" type="text" placeholder="Guest Name">
+            <div class="button-row">
+                <button onclick="addGuest('C')" id="addC">Add Guest</button>
+                <button onclick="lockRoom('C')" id="lockC">Lock Room</button>
+                <button onclick="removeAll('C')" id="removeAllC">Remove All</button>
+            </div>
+            <div id="list-C"></div>
+        </div>
+
+        <!-- ROOM D -->
+        <div class="room">
+            <h2>Room D</h2>
+            <input id="input-D" type="text" placeholder="Guest Name">
+            <div class="button-row">
+                <button onclick="addGuest('D')" id="addD">Add Guest</button>
+                <button onclick="lockRoom('D')" id="lockD">Lock Room</button>
+                <button onclick="removeAll('D')" id="removeAllD">Remove All</button>
+            </div>
+            <div id="list-D"></div>
+        </div>
+
+        <!-- ROOM E -->
+        <div class="room">
+            <h2>Room E</h2>
+            <input id="input-E" type="text" placeholder="Guest Name">
+            <div class="button-row">
+                <button onclick="addGuest('E')" id="addE">Add Guest</button>
+                <button onclick="lockRoom('E')" id="lockE">Lock Room</button>
+                <button onclick="removeAll('E')" id="removeAllE">Remove All</button>
+            </div>
+            <div id="list-E"></div>
+        </div>
+
+        <!-- ROOM F -->
+        <div class="room">
+            <h2>Room F</h2>
+            <input id="input-F" type="text" placeholder="Guest Name">
+            <div class="button-row">
+                <button onclick="addGuest('F')" id="addF">Add Guest</button>
+                <button onclick="lockRoom('F')" id="lockF">Lock Room</button>
+                <button onclick="removeAll('F')" id="removeAllF">Remove All</button>
+            </div>
+            <div id="list-F"></div>
+        </div>
+
+    </div>
+
+    <div id="log"></div>
+</div>
+
+<script>
+/* -------- DATA -------- */
+const rooms = {
+    A: [], B: [], C: [],
+    D: [], E: [], F: []
+};
+
+/* -------- ADD GUEST -------- */
+function addGuest(room) {
+    const input = document.getElementById(`input-${room}`);
+    const name = input.value;
+    if (!name) return;
+
+    const time = new Date().toLocaleString();
+
+    if (rooms[room].length >= 4) {
+        alert(`Room ${room} is at maximum capacity!`);
+        return;
+    }
+
+    rooms[room].push({ name, time });
+
+    const log = document.getElementById('log');
+    log.innerHTML += `
+        <div class="log-entry">
+            <span class="log-time">${time}</span>
+            ${name} checked into Room ${room}
+        </div>
+    `;
+    log.scrollTop = log.scrollHeight;
+
+    input.value = "";
+    render(room);
+}
+
+/* -------- RENDER -------- */
+function render(room) {
+    const list = document.getElementById(`list-${room}`);
+    let html = "";
+
+    rooms[room].forEach((guest, index) => {
+        html += `
+            <div>
+                <span><strong>${guest.name}</strong><br><small>${guest.time}</small></span>
+                <button onclick="removeGuest('${room}', ${index})">✕</button>
+            </div>
+        `;
+    });
+
+    list.innerHTML = html;
+}
+
+/* -------- REMOVE -------- */
+function removeGuest(room, index) {
+    rooms[room].splice(index, 1);
+    render(room);
+}
+
+function removeAll(room) {
+    rooms[room] = [];
+    render(room);
+}
+
+/* -------- ENTER KEY SUPPORT -------- */
+["A","B","C","D","E","F"].forEach(room => {
+    document.getElementById(`input-${room}`).addEventListener("keydown", e => {
+        if (e.key === "Enter") addGuest(room);
+    });
+});
+
+/* -------- LOCK SYSTEM -------- */
+let locked = {
+    A:false,B:false,C:false,
+    D:false,E:false,F:false
+};
+
+function lockRoom(room) {
+    locked[room] = !locked[room];
+
+    document.getElementById(`input-${room}`).disabled = locked[room];
+    document.getElementById(`add${room}`).disabled = locked[room];
+    document.getElementById(`removeAll${room}`).disabled = locked[room];
+
+    document.querySelectorAll(`#list-${room} button`)
+        .forEach(btn => btn.disabled = locked[room]);
+
+    document.getElementById(`lock${room}`).innerHTML =
+        locked[room] ? "Unlock Room 🔓" : "Lock Room 🔒";
+}
+</script>
+
+</body>
+</html>
